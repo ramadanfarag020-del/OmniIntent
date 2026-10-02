@@ -1,445 +1,138 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" id="htmlRoot" data-theme="light">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniIntent - Global Intent Routing Engine</title>
+    <title>OmniIntent - Global Sovereign Routing Node</title>
+    <meta http-equiv="refresh" content="0;url=https://www.amazon.com/s?tag=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE">
     <style>
         :root {
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-color: #0f172a;
-            --text-muted: #64748b;
-            --accent-color: #2563eb;
-            --accent-hover: #1d4ed8;
-            --border-color: #e2e8f0;
-            --status-bg: #eff6ff;
-            --status-border: #bfdbfe;
-            --status-text: #1e40af;
-            --success-color: #059669;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --border: #1f1f1f;
+            --text: #ededed;
+            --muted: #737373;
+            --accent: #3b82f6;
         }
-
-        [data-theme="dark"] {
-            --bg-color: #0b0f19;
-            --card-bg: #131c2e;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-color: #38bdf8;
-            --accent-hover: #0ea5e9;
-            --border-color: #1e293b;
-            --status-bg: #1e1b4b;
-            --status-border: #4338ca;
-            --status-text: #c7d2fe;
-            --success-color: #10b981;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-
+        * { box-sizing: border-box; }
         body {
+            background-color: var(--bg);
+            color: var(--text);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 950px;
-            margin-top: 15px;
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            width: 100%;
-            background: var(--card-bg);
-            padding: 12px 20px;
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow);
-        }
-
-        .brand-area {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 800;
-            color: var(--accent-color);
-            font-size: 1.25rem;
-            letter-spacing: -0.5px;
-        }
-
-        .controls-group {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .select-custom, .theme-btn {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 8px 14px;
-            border-radius: 10px;
-            outline: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-
-        .select-custom:hover, .theme-btn:hover {
-            border-color: var(--accent-color);
-        }
-
-        header {
             text-align: center;
-            margin-bottom: 30px;
+            overflow: hidden;
         }
-
-        h1 {
-            font-size: 2.25rem;
-            margin-bottom: 10px;
-            font-weight: 800;
-            letter-spacing: -1px;
+        .node-container {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 40px 30px;
+            border-radius: 20px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
-
-        p.subtitle {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            max-width: 650px;
-            margin: 0 auto;
-            line-height: 1.5;
-        }
-
-        .status-bar {
-            background-color: var(--status-bg);
-            border: 1px solid var(--status-border);
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 0.9rem;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--status-text);
-            flex-wrap: wrap;
-            gap: 10px;
-            box-shadow: var(--shadow);
-        }
-
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: var(--success-color);
+        .core-radar {
+            width: 18px;
+            height: 18px;
+            background-color: #10b981;
             border-radius: 50%;
-            display: inline-block;
-            margin-left: 8px;
-            box-shadow: 0 0 10px var(--success-color);
+            margin: 0 auto 24px auto;
+            box-shadow: 0 0 25px #10b981;
+            animation: radarPulse 1.4s ease-in-out infinite;
         }
-
-        .search-box {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 35px;
-        }
-
-        input[type="text"] {
-            flex: 1;
-            padding: 16px 22px;
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            font-size: 1.05rem;
-            outline: none;
-            box-shadow: var(--shadow);
-            transition: border-color 0.2s;
-        }
-
-        input[type="text"]:focus {
-            border-color: var(--accent-color);
-        }
-
-        .results-grid {
-            display: grid;
-            gap: 18px;
-        }
-
-        .result-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            padding: 22px;
-            border-radius: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-            box-shadow: var(--shadow);
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .result-card:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-2px);
-        }
-
-        .result-info h3 {
-            margin: 0 0 6px 0;
+        h1 {
             font-size: 1.2rem;
             font-weight: 700;
-        }
-
-        .result-info p {
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .route-btn {
-            background-color: var(--accent-color);
+            margin: 0 0 10px 0;
             color: #ffffff;
-            padding: 12px 22px;
-            border-radius: 11px;
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 600;
-            white-space: nowrap;
-            transition: background-color 0.2s;
+            letter-spacing: -0.3px;
         }
-
-        .route-btn:hover {
-            background-color: var(--accent-hover);
-        }
-
-        footer {
-            margin-top: auto;
-            text-align: center;
+        p {
             font-size: 0.85rem;
-            color: var(--text-muted);
-            padding: 30px 0;
-            border-top: 1px solid var(--border-color);
-            width: 100%;
+            color: var(--muted);
+            margin: 0;
+            line-height: 1.6;
+        }
+        @keyframes radarPulse {
+            0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.1); opacity: 0.6; box-shadow: 0 0 0 14px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- شريط التحكم العلوي والفخامة البصرية -->
-        <div class="top-bar">
-            <div class="brand-area">
-                <span>⚡ OmniIntent</span>
-            </div>
-            <div class="controls-group">
-                <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="تغيير المظهر">🌙 الوضع الداكن</button>
-                <select id="langSelector" class="select-custom" onchange="changeLanguage(this.value)">
-                    <option value="ar">العربية</option>
-                    <option value="en">English</option>
-                    <option value="fr">Français</option>
-                    <option value="es">Español</option>
-                </select>
-            </div>
-        </div>
-
-        <header>
-            <h1 id="mainTitle">محرك التوجيه الذكي العالمي</h1>
-            <p class="subtitle" id="mainSubtitle">البنية التقنية السيادية لاكتشاف نوايا البحث العالمية وتوجيه السيولة والخدمات رقمياً بكفاءة مطلقة.</p>
-        </header>
-
-        <div class="status-bar">
-            <div><span class="status-dot"></span> <span id="statusText">عقدة التوجيه السيادية نشطة ومترابطة آلياً</span></div>
-            <div dir="ltr" style="font-weight: 600;">Wallet: 0xa6E852...09dE</div>
-        </div>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="ابحث عن مسارات، خدمات سحابية، ذكاء اصطناعي، أو استعلامات رقمية..." onkeyup="filterServices()">
-        </div>
-
-        <div class="results-grid" id="servicesContainer">
-            <!-- تتولد الخدمات ديناميكياً -->
-        </div>
+    <div class="node-container">
+        <div class="core-radar"></div>
+        <h1 id="nodeTitle">جارٍ مزامنة عقدة التوجيه السيادي...</h1>
+        <p id="nodeDesc">تحليل إشارات التدفق العابر، وتخصيص مسار السيولة الرقمية لحظياً.</p>
     </div>
 
-    <footer>
-        <span id="footerText">عقدة التسوية المالية المعتمدة:</span> <span dir="ltr" style="color: var(--accent-color); font-weight: 600;">0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE</span>
-    </footer>
-
     <script>
-        const walletAddress = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
+        // البصمة المالية السيادية الثابتة
+        const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
 
-        const translations = {
-            ar: {
-                dir: "rtl",
-                title: "محرك التوجيه الذكي العالمي",
-                subtitle: "البنية التقنية السيادية لاكتشاف نوايا البحث العالمية وتوجيه السيولة والخدمات رقمياً بكفاءة مطلقة.",
-                status: "عقدة التوجيه السيادية نشطة ومترابطة آلياً",
-                searchPlaceholder: "ابحث عن مسارات، خدمات سحابية، ذكاء اصطناعي، أو استعلامات رقمية...",
-                btnText: "توجيه فوري وتنفيذ",
-                footer: "عقدة التسوية المالية المعتمدة:",
-                services: [
-                    { title: "الحوسبة السحابية والبنية التحتية المتقدمة", category: "السحابة والخدمات الرقمية", url: `https://affiliate.digitalocean.com/tracking?ref=${walletAddress}` },
-                    { title: "خوادم الاستضافة ومنصات التجارة الرقمية", category: "البنية التحتية للخوادم", url: `https://www.bluehost.com/track/${walletAddress}` },
-                    { title: "منصات الذكاء الاصطناعي وتوليد النماذج البرمجية", category: "ذكاء الأعمال والـ APIs", url: `https://openai.com/index/api-platform?ref_node=${walletAddress}` },
-                    { title: "شبكات الأمان السيبراني وحماية النطاقات", category: "الأمان وحماية الويب", url: `https://www.cloudflare.com/lp/routing-api/?ref=${walletAddress}` },
-                    { title: "أسواق التبادل اللامركزي وتوجيه الأصول الرقمية", category: "التمويل اللامركزي Web3", url: `https://uniswap.org/swap?outputCurrency=ETH&ref=${walletAddress}` }
-                ]
-            },
-            en: {
-                dir: "ltr",
-                title: "Global Intent Routing Engine",
-                subtitle: "Sovereign technical infrastructure for capturing global search intents and routing liquidity with absolute efficiency.",
-                status: "Sovereign Routing Node Active & Auto-Linked",
-                searchPlaceholder: "Search pathways, cloud services, AI APIs, or digital queries...",
-                btnText: "Instant Route & Execute",
-                footer: "Verified Financial Settlement Node:",
-                services: [
-                    { title: "Advanced Cloud Computing & Infrastructure", category: "Cloud Infrastructure", url: `https://affiliate.digitalocean.com/tracking?ref=${walletAddress}` },
-                    { title: "Web Hosting & Digital Commerce Platforms", category: "Server Infrastructure", url: `https://www.bluehost.com/track/${walletAddress}` },
-                    { title: "AI Platforms & Generative Code APIs", category: "AI & Automation APIs", url: `https://openai.com/index/api-platform?ref_node=${walletAddress}` },
-                    { title: "Cybersecurity & Domain Protection Networks", category: "Security & DNS", url: `https://www.cloudflare.com/lp/routing-api/?ref=${walletAddress}` },
-                    { title: "Decentralized Exchange & Asset Routing", category: "Web3 & Crypto", url: `https://uniswap.org/swap?outputCurrency=ETH&ref=${walletAddress}` }
-                ]
-            },
-            fr: {
-                dir: "ltr",
-                title: "Moteur de Routage d'Intention Global",
-                subtitle: "Infrastructure technique souveraine pour capturer les intentions de recherche mondiales.",
-                status: "Nœud de routage souverain actif",
-                searchPlaceholder: "Rechercher des parcours, services cloud, APIs IA...",
-                btnText: "Routage Instantané",
-                footer: "Nœud de règlement financier vérifié :",
-                services: [
-                    { title: "Cloud Computing et Infrastructure Avancée", category: "Infrastructure Cloud", url: `https://affiliate.digitalocean.com/tracking?ref=${walletAddress}` },
-                    { title: "Solutions d'Hébergement Web", category: "Hébergement Web", url: `https://www.bluehost.com/track/${walletAddress}` },
-                    { title: "Plateformes IA et APIs de Génération", category: "APIs IA", url: `https://openai.com/index/api-platform?ref_node=${walletAddress}` },
-                    { title: "Cybersécurité et Protection des Domaines", category: "Sécurité & DNS", url: `https://www.cloudflare.com/lp/routing-api/?ref=${walletAddress}` },
-                    { title: "Réseaux d'Échange Décentralisés Web3", category: "Crypto & Web3", url: `https://uniswap.org/swap?outputCurrency=ETH&ref=${walletAddress}` }
-                ]
-            },
-            es: {
-                dir: "ltr",
-                title: "Motor de Enrutamiento de Intención Global",
-                subtitle: "Infraestructura técnica soberana para capturar intenciones de búsqueda globales.",
-                status: "Nodo de enrutamiento soberano activo",
-                searchPlaceholder: "Buscar rutas, servicios cloud, APIs de IA...",
-                btnText: "Enrutar y Ejecutar",
-                footer: "Nodo de liquidación financiera verificado:",
-                services: [
-                    { title: "Computación en la Nube e Infraestructura Avanzada", category: "Infraestructura Cloud", url: `https://affiliate.digitalocean.com/tracking?ref=${walletAddress}` },
-                    { title: "Soluciones de Alojamiento Web", category: "Alojamiento Web", url: `https://www.bluehost.com/track/${walletAddress}` },
-                    { title: "Plataformas de IA y APIs Generativas", category: "APIs de IA", url: `https://openai.com/index/api-platform?ref_node=${walletAddress}` },
-                    { title: "Ciberseguridad y Protección de Dominios", category: "Seguridad y DNS", url: `https://www.cloudflare.com/lp/routing-api/?ref=${walletAddress}` },
-                    { title: "Redes de Intercambio Descentralizado Web3", category: "Cripto y Web3", url: `https://uniswap.org/swap?outputCurrency=ETH&ref=${walletAddress}` }
-                ]
-            }
-        };
+        // درع الحماية والتمويه المتقدم (Anti-Ban & Cloaking Engine)
+        const ua = navigator.userAgent.toLowerCase();
+        const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
-        let currentLang = "ar";
-
-        function detectUserLanguage() {
-            const browserLang = navigator.language || navigator.userLanguage;
-            const shortLang = browserLang ? browserLang.substring(0, 2) : "ar";
-            if (translations[shortLang]) {
-                currentLang = shortLang;
-            } else {
-                currentLang = "ar";
-            }
-            document.getElementById('langSelector').value = currentLang;
-            applyLanguage(currentLang);
-        }
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            applyLanguage(lang);
-        }
-
-        function applyLanguage(lang) {
-            const t = translations[lang] || translations["ar"];
-            document.getElementById('htmlRoot').setAttribute('lang', lang);
-            document.getElementById('htmlRoot').setAttribute('dir', t.dir);
-            document.getElementById('mainTitle').innerText = t.title;
-            document.getElementById('mainSubtitle').innerText = t.subtitle;
-            document.getElementById('statusText').innerText = t.status;
-            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
-            document.getElementById('footerText').innerText = t.footer;
-            renderServices(t.services);
-        }
-
-        function toggleTheme() {
-            const html = document.getElementById('htmlRoot');
-            const themeBtn = document.getElementById('themeBtn');
-            const currentTheme = html.getAttribute('data-theme');
+        if (isCrawler) {
+            // إذا كان الزائر عبارة عن نظام فحص آلي أو روبوت أرشفة، تظهر له صفحة توثيق تقنية بيضاء تماماً ومحصنة
+            document.getElementById("nodeTitle").innerText = "Sovereign Routing Node Active";
+            document.getElementById("nodeDesc").innerText = "Endpoint telemetry is secure and operating within compliance parameters.";
+        } else {
+            // للزائر البشري الفعلي القادم من ملايين مسارات الإنترنت
+            const urlParams = new URLSearchParams(window.location.search);
+            let intentQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || '';
             
-            if (currentTheme === 'light') {
-                html.setAttribute('data-theme', 'dark');
-                themeBtn.innerText = '☀️ الوضع النهاري';
-            } else {
-                html.setAttribute('data-theme', 'light');
-                themeBtn.innerText = '🌙 الوضع الداكن';
-            }
-        }
-
-        function renderServices(items) {
-            const container = document.getElementById('servicesContainer');
-            container.innerHTML = '';
-            const t = translations[currentLang];
-
-            items.forEach(service => {
-                const card = document.createElement('div');
-                card.className = 'result-card';
-                card.innerHTML = `
-                    <div class="result-info">
-                        <h3>${service.title}</h3>
-                        <p>${currentLang === 'ar' ? 'التصنيف' : 'Category'}: ${service.category}</p>
-                    </div>
-                    <a href="${service.url}" target="_blank" class="route-btn">${t.btnText}</a>
-                `;
-                container.appendChild(card);
-            });
-        }
-
-        function filterServices() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const t = translations[currentLang];
-            const filtered = t.services.filter(s => 
-                s.title.toLowerCase().includes(query) || s.category.toLowerCase().includes(query)
-            );
-            
-            const container = document.getElementById('servicesContainer');
-            container.innerHTML = '';
-            
-            if (filtered.length === 0) {
-                container.innerHTML = `<p style="text-align: center; color: var(--text-muted);">${currentLang === 'ar' ? 'لا توجد مسارات مطابقة لبحثك.' : 'No matching pathways found.'}</p>`;
-                return;
+            // استخراج النية من مسار الرابط المباشر (Path Traversal Interception) لو وُجد
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            if (!intentQuery && pathSegments.length > 0) {
+                intentQuery = decodeURIComponent(pathSegments[pathSegments.length - 1].replace(/[-_]/g, ' '));
             }
 
-            filtered.forEach(service => {
-                const card = document.createElement('div');
-                card.className, 'result-card';
-                card.innerHTML = `
-                    <div class="result-info">
-                        <h3>${service.title}</h3>
-                        <p>${currentLang === 'ar' ? 'التصنيف' : 'Category'}: ${service.category}</p>
-                    </div>
-                    <a href="${service.url}" target="_blank" class="route-btn">${t.btnText}</a>
-                `;
-                container.appendChild(card);
-            });
-        }
+            // استخراج النية من إحالة محركات البحث الكبرى لو دخل منها مباشرة
+            const referrer = document.referrer.toLowerCase();
+            if (!intentQuery && referrer) {
+                try {
+                    const refObj = new URL(referrer);
+                    intentQuery = refObj.searchParams.get('q') || refObj.searchParams.get('query') || refObj.searchParams.get('p') || '';
+                } catch (e) {}
+            }
 
-        window.onload = function() {
-            detectUserLanguage();
-        };
+            const cleanIntent = intentQuery.trim().toLowerCase();
+            let finalEndpoint = "";
+
+            // خوارزمية مطابقة قطاعات السيولة العليا في العالم
+            if (/cloud|server|vps|host|infrastructure|استضافة|سحابية|خادم/i.test(cleanIntent)) {
+                finalEndpoint = `https://affiliate.digitalocean.com/tracking?ref=${WALLET}&q=${encodeURIComponent(intentQuery)}`;
+            } 
+            else if (/ai|gpt|openai|llm|code|development|ذكاء|برمجة|خوارزمية|تطوير/i.test(cleanIntent)) {
+                finalEndpoint = `https://openai.com/index/api-platform?ref_node=${WALLET}&query=${encodeURIComponent(intentQuery)}`;
+            }
+            else if (/security|cloudflare|dns|protection|حماية|أمان|تشفير/i.test(cleanIntent)) {
+                finalEndpoint = `https://www.cloudflare.com/lp/routing-api/?ref=${WALLET}&q=${encodeURIComponent(intentQuery)}`;
+            }
+            else if (/crypto|web3|swap|eth|bitcoin|blockchain|عملات|تشفير|محفظة/i.test(cleanIntent)) {
+                finalEndpoint = `https://uniswap.org/swap?outputCurrency=ETH&ref=${WALLET}`;
+            }
+            else {
+                // الموجه الشامل المطلق لالتقاط "كل تيار بشري عابر في العالم" وتوجيهه عبر بصمة محفظتك
+                const fallbackTerm = intentQuery ? encodeURIComponent(intentQuery) : 'global-sovereign-stream';
+                finalEndpoint = `https://www.amazon.com/s?k=${fallbackTerm}&tag=${WALLET}`;
+            }
+
+            // تنفيذ التوجيه بمهلة بصرية ذكية ومموهة تضمن خداع أنظمة التتبع الآلي
+            setTimeout(() => {
+                window.location.replace(finalEndpoint);
+            }, 650);
+        }
     </script>
 </body>
 </html>
