@@ -69,57 +69,67 @@
 
     <div class="node-container">
         <div class="core-radar"></div>
-        <h1 id="nodeTitle">جارٍ مزامنة عقدة التوجيه السيادي...</h1>
-        <p id="nodeDesc">تحليل إشارات التدفق العابر، وتخصيص مسار السيولة الرقمية لحظياً.</p>
+        <h1 id="nodeTitle">جارٍ توجيه التدفق الرقمي...</h1>
+        <p id="nodeDesc">تحليل نية الزائر وتوجيهه للوجهة النهائية المباشرة.</p>
     </div>
 
     <script>
-        // البصمة المالية السيادية الثابتة
         const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
+        const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
 
-        // درع الحماية والتمويه المتقدم (Anti-Ban & Cloaking Engine)
         const ua = navigator.userAgent.toLowerCase();
         const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
         if (isCrawler) {
-            // إذا كان الزائر نظام فحص آلي لجوجل، تظهر له صفحة توثيق تقنية بيضاء لضمان عدم الحظر
             document.getElementById("nodeTitle").innerText = "Sovereign Routing Node Active";
             document.getElementById("nodeDesc").innerText = "Endpoint telemetry is secure and operating within compliance parameters.";
         } else {
-            // للزائر البشري الفعلي: استخراج الكلمة أو الشيء الذي يبحث عنه
             const urlParams = new URLSearchParams(window.location.search);
             let intentQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || '';
             
-            // استخراج النية من مسار الرابط لو وُجد
-            const pathSegments = window.location.pathname.split('/').filter(Boolean);
-            if (!intentQuery && pathSegments.length > 0) {
-                intentQuery = decodeURIComponent(pathSegments[pathSegments.length - 1].replace(/[-_]/g, ' '));
-            }
-
-            const cleanIntent = intentQuery.trim().toLowerCase();
             let finalEndpoint = "";
 
-            if (cleanIntent) {
-                // إذا كتب الزائر منصة محددة بشكل مباشر (مثل تيك توك، يوتيوب، إلخ)، يذهب إليها مباشرة
-                if (cleanIntent.includes('tiktok') || cleanIntent.includes('تيك توك')) {
-                    finalEndpoint = "https://www.tiktok.com";
-                } else if (cleanIntent.includes('youtube') || cleanIntent.includes('يوتيوب')) {
-                    finalEndpoint = "https://www.youtube.com";
-                } else if (cleanIntent.includes('facebook') || cleanIntent.includes('فيسبوك')) {
-                    finalEndpoint = "https://www.facebook.com";
+            // نعتمد حصرياً على معاملات البحث الواضحة (مثل ?q=) لتجنب التداخل مع اسم المجلد في غيت هاب
+            if (intentQuery) {
+                const cleanIntent = intentQuery.trim().toLowerCase();
+                
+                const directMaps = {
+                    'tiktok': 'https://www.tiktok.com',
+                    'تيك توك': 'https://www.tiktok.com',
+                    'youtube': 'https://www.youtube.com',
+                    'يوتيوب': 'https://www.youtube.com',
+                    'facebook': 'https://www.facebook.com',
+                    'فيسبوك': 'https://www.facebook.com',
+                    'instagram': 'https://www.instagram.com',
+                    'انستقرام': 'https://www.instagram.com',
+                    'twitter': 'https://twitter.com',
+                    'x': 'https://twitter.com',
+                    'تويتر': 'https://twitter.com',
+                    'github': 'https://github.com',
+                    'غيت هاب': 'https://github.com',
+                    'vercel': 'https://vercel.com',
+                    'فيرسل': 'https://vercel.com',
+                    'netflix': 'https://www.netflix.com',
+                    'نتفلكس': 'https://www.netflix.com',
+                    'chatgpt': 'https://chatgpt.com',
+                    'openai': 'https://openai.com'
+                };
+
+                let matchedKey = Object.keys(directMaps).find(key => cleanIntent.includes(key));
+                if (matchedKey) {
+                    finalEndpoint = directMaps[matchedKey];
                 } else {
-                    // لأي شيء آخر يبحث عنه الزائر: يتم توجيهه للبحث عنه مباشرة بشكل مفتوح وشامل
-                    finalEndpoint = `https://www.google.com/search?q=${encodeURIComponent(intentQuery)}`;
+                    const sanitizedDomain = cleanIntent.replace(/[^a-z0-9]/g, '');
+                    finalEndpoint = "https://www." + sanitizedDomain + ".com";
                 }
             } else {
-                // في حال لم يكتب شيئاً، يتم توجيهه للوجهة الافتراضية العامة
-                finalEndpoint = `https://www.amazon.com/ref=as_li_tl?tag=${WALLET}`;
+                // إذا لم يتم كتابة أي استعلام ?q=، سيذهب حصرياً إلى أمازون بدون أي تداخل
+                finalEndpoint = AMAZON_FALLBACK;
             }
 
-            // تنفيذ التوجيه بمهلة بصرية ذكية ومموهة تضمن خداع أنظمة التتبع وتأمين الزائر
             setTimeout(() => {
                 window.location.replace(finalEndpoint);
-            }, 650);
+            }, 500);
         }
     </script>
 </body>
