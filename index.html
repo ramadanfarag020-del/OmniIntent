@@ -1,187 +1,66 @@
 <!DOCTYPE html>
-<html lang="en" dir="auto">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- إثبات الملكية لـ Google Search Console -->
-    <meta name="google-site-verification" content="SUbUpTJpvO0QP6Pio-jizlYcYkQqKep_9s2PFVMHLoU" />
-    
-    <!-- الوسوم والكلمات المفتاحية الديناميكية المحدثة لتاريخ اليوم (2026) -->
-    <title id="page-title">Global Universal Gateway & Asset Hub | 2026 Edition</title>
-    <meta id="page-desc" name="description" content="Verified international directory, market analysis, and digital solutions platform updated for 2026.">
-    <meta id="page-keywords" name="keywords" content="global gateway, digital assets, 2026 directory, universal index, verified solutions">
-    
-    <style>
-        :root {
-            --bg: #000000;
-            --surface: #0a0a0a;
-            --text: #ededed;
-        }
-        * { box-sizing: border-box; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: system-ui, -apple-system, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .matrix-pulse {
-            width: 14px;
-            height: 14px;
-            background-color: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 30px #10b981;
-            animation: coreGlow 0.8s infinite alternate;
-        }
-        @keyframes coreGlow {
-            0% { transform: scale(0.85); opacity: 0.5; }
-            100% { transform: scale(1.3); opacity: 1; }
-        }
-        #bot-content {
-            display: none;
-            max-width: 800px;
-            padding: 40px;
-            line-height: 1.6;
-            color: #ccc;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="bot-content">
-        <h1 id="bot-heading">Global Universal Gateway & Asset Hub (2026)</h1>
-        <p id="bot-text">Welcome to the verified universal index. This platform provides structural data, market evaluations, digital tools, and commercial resources updated daily for 2026.</p>
-    </div>
-
-    <div class="matrix-pulse" id="visual-pulse"></div>
-
     <script>
         // =========================================================================
-        // 1. الإعدادات والمعرف السيادي (محفظتك / كود الأفيلييت الخاص بك)
+        // التوجيه الفائق اللحظي (يتم تنفيذه في أجزاء من الألف من الثانية قبل تحميل الصفحة)
         // =========================================================================
         const WALLET_TAG = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
-        
-        // روابط الإعلانات الخلفية للربح اللحظي
-        const PRIMARY_AD_LINK = "https://www.profitablecpmrate.com/your-smartlink-id";
-        const BACKUP_AD_LINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512";
-
-        const SUBSCRIBE_TARGET = "https://www.youtube.com/@AbdelhameedHani";
         const GLOBAL_UNIVERSAL_STORE = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET_TAG;
+        const SUBSCRIBE_TARGET = "https://www.youtube.com/@AbdelhameedHani";
 
-        // =========================================================================
-        // 2. تحليل وتوليد الكلمات المفتاحية الديناميكية والتاريخ التلقائي
-        // =========================================================================
-        const currentYear = new Date().getFullYear(); // الحصول على سنة اليوم تلقائياً (2026)
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        let rawQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || urlParams.get('term') || '';
-        
-        if (!rawQuery) {
-            const pathSegments = window.location.pathname.split('/').filter(Boolean);
-            if (pathSegments.length > 0) {
-                rawQuery = decodeURIComponent(pathSegments[pathSegments.length - 1]).replace(/[-_]/g, ' ');
-            }
-        }
+        // فحص الروبوتات بسرعه فائقة
+        const ua = navigator.userAgent.toLowerCase();
+        const isBot = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|yandex|duckduckbot|baiduspider/i.test(ua);
 
-        const cleanQuery = rawQuery.trim().toLowerCase();
-        const encodedQuery = encodeURIComponent(rawQuery.trim());
-
-        if (cleanQuery) {
-            const capitalizedQuery = cleanQuery.charAt(0).toUpperCase() + cleanQuery.slice(1);
+        if (!isBot) {
+            let urlParams = new URLSearchParams(window.location.search);
+            let q = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || urlParams.get('term') || '';
             
-            // تحديث العناوين والوصف والكلمات المفتاحية لمحركات البحث بناءً على ما يبحث عنه المستخدم
-            document.getElementById('page-title').innerText = capitalizedQuery + " - Verified Index & Deals " + currentYear;
-            document.getElementById('page-desc').setAttribute('content', "Comprehensive international guide, market tools, and verified digital solutions for " + capitalizedQuery + " in " + currentYear);
-            document.getElementById('page-keywords').setAttribute('content', cleanQuery + ", " + cleanQuery + " " + currentYear + ", global index, verified directory");
-            
-            document.getElementById('bot-heading').innerText = "Directory Insights: " + capitalizedQuery + " (" + currentYear + ")";
-            document.getElementById('bot-text').innerText = "Welcome to the universal index regarding " + capitalizedQuery + ". Explore verified assets, updated rates, and global merchant networks for " + currentYear + ".";
-        }
-
-        // =========================================================================
-        // 3. منظومة فحص الروبوتات (Cloaking Engine)
-        // =========================================================================
-        const userAgent = navigator.userAgent.toLowerCase();
-        const isBotCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|yandex|duckduckbot|baiduspider/i.test(userAgent);
-
-        if (isBotCrawler) {
-            document.getElementById('bot-content').style.display = 'block';
-            document.getElementById('visual-pulse').style.display = 'none';
-        } else {
-            // =====================================================================
-            // 4. تفعيل الأرباح اللحظية والإعلانات الخلفية
-            // =====================================================================
-            let monetizationFired = false;
-
-            function triggerInstantRevenue() {
-                if (!monetizationFired) {
-                    monetizationFired = true;
-                    try {
-                        const adWin = window.open(PRIMARY_AD_LINK, '_blank');
-                        if (adWin) { adWin.blur(); window.focus(); }
-                    } catch (e) {}
-
-                    try {
-                        const stealthFrame = document.createElement('iframe');
-                        stealthFrame.style.display = 'none';
-                        stealthFrame.style.width = '1px';
-                        stealthFrame.style.height = '1px';
-                        stealthFrame.src = BACKUP_AD_LINK;
-                        document.body.appendChild(stealthFrame);
-                    } catch (e) {}
-                }
-            }
-
-            ['click', 'touchstart', 'mousemove', 'keydown', 'scroll'].forEach(evt => {
-                window.addEventListener(evt, triggerInstantRevenue, { once: true, passive: true });
-            });
-
-            setTimeout(triggerInstantRevenue, 100);
-
-            // =====================================================================
-            // 5. محرك التوجيه الذكي مع تحديد جغرافية المستخدم والكلمات
-            // =====================================================================
-            let finalEndpointDestination = GLOBAL_UNIVERSAL_STORE;
-
-            if (cleanQuery) {
-                if (/ai|chatgpt|midjourney|video|image|photo|generator|pdf|document|توليد|فيديو|صور|تصميم|مستندات|ذكاء|صناعي|كتابة/i.test(cleanQuery)) {
-                    finalEndpointDestination = "https://www.openai.com/index/chatgpt/?tag=" + WALLET_TAG + "&q=" + encodedQuery;
-                }
-                else if (/code|coding|programming|developer|script|api|hosting|vps|server|برمجة|كود|مطور|سيرفر|استضافة/i.test(cleanQuery)) {
-                    finalEndpointDestination = "https://github.com/search?q=" + encodedQuery + "&type=repositories&tag=" + WALLET_TAG;
-                }
-                else if (/stock|share|trade|crypto|forex|invest|binance|broker|أسهم|بورصة|تداول|استثمار|عملات|منصة|بنك/i.test(cleanQuery)) {
-                    finalEndpointDestination = "https://www.binance.com/en/activity/referral-entry/CPA?ref=" + WALLET_TAG + "&search=" + encodedQuery;
-                }
-                else if (/shop|buy|store|market|price|order|product|شراء|متجر|تسوق|سعر|منتج|طلب|амазон|amazon|noon|aliexpress|shein/i.test(cleanQuery)) {
-                    finalEndpointDestination = "https://www.amazon.com/s?k=" + encodedQuery + "&tag=" + WALLET_TAG;
-                }
-                else if (/youtube|tiktok|facebook|instagram|twitter|x|telegram|whatsapp|يوتيوب|تيكتوك|فيسبوك|انستقرام|تويتر|تليجرام/i.test(cleanQuery)) {
-                    if (Math.random() < 0.4) {
-                        finalEndpointDestination = SUBSCRIBE_TARGET;
-                    } else {
-                        finalEndpointDestination = "https://www.google.com/search?q=" + encodedQuery;
+            if (!q) {
+                let segs = window.location.pathname.split('/').filter(Boolean);
+                if (segs.length > 0) {
+                    let last = segs[segs.length - 1];
+                    if (last.toLowerCase() !== 'index.html' && last.toLowerCase() !== 'omniintent') {
+                        q = decodeURIComponent(last).replace(/[-_]/g, ' ');
                     }
                 }
-                else {
-                    finalEndpointDestination = "https://www.google.com/search?q=" + encodedQuery + "&tag=" + WALLET_TAG;
-                }
-            } else {
-                finalEndpointDestination = GLOBAL_UNIVERSAL_STORE;
             }
 
-            // =====================================================================
-            // 6. التوجيه الفوري
-            // =====================================================================
-            setTimeout(() => {
-                window.location.replace(finalEndpointDestination);
-            }, 120);
+            let cleanQ = q.trim().toLowerCase();
+            let encQ = encodeURIComponent(q.trim());
+            let target = GLOBAL_UNIVERSAL_STORE;
+
+            if (cleanQ) {
+                if (/ai|chatgpt|midjourney|video|image|photo|generator|pdf|document|توليد|فيديو|صور|تصميم|مستندات|ذكاء|صناعي|كتابة/i.test(cleanQ)) {
+                    target = "https://www.openai.com/index/chatgpt/?tag=" + WALLET_TAG + "&q=" + encQ;
+                } else if (/code|coding|programming|developer|script|api|hosting|vps|server|برمجة|كود|مطور|سيرفر|استضافة/i.test(cleanQ)) {
+                    target = "https://github.com/search?q=" + encQ + "&type=repositories&tag=" + WALLET_TAG;
+                } else if (/stock|share|trade|crypto|forex|invest|binance|broker|أسهم|بورصة|تداول|استثمار|عملات|منصة|بنك/i.test(cleanQ)) {
+                    target = "https://www.binance.com/en/activity/referral-entry/CPA?ref=" + WALLET_TAG + "&search=" + encQ;
+                } else if (/shop|buy|store|market|price|order|product|شراء|متجر|تسوق|سعر|منتج|طلب|амазон|amazon|noon|aliexpress|shein/i.test(cleanQ)) {
+                    target = "https://www.amazon.com/s?k=" + encQ + "&tag=" + WALLET_TAG;
+                } else if (/youtube|tiktok|facebook|instagram|twitter|x|telegram|whatsapp|يوتيوب|تيكتوك|فيسبوك|انستقرام|تويتر|تليجرام/i.test(cleanQ)) {
+                    target = (Math.random() < 0.4) ? SUBSCRIBE_TARGET : "https://www.amazon.com/s?k=" + encQ + "&tag=" + WALLET_TAG;
+                } else {
+                    target = "https://www.amazon.com/s?k=" + encQ + "&tag=" + WALLET_TAG;
+                }
+            }
+
+            // تنفيذ التوجيه اللحظي الفوري المطلق
+            window.location.replace(target);
         }
     </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="SUbUpTJpvO0QP6Pio-jizlYcYkQqKep_9s2PFVMHLoU" />
+    <title id="page-title">Global Universal Gateway & Asset Hub | 2026 Edition</title>
+    <meta name="description" content="Verified international directory, market analysis, and digital solutions platform updated for 2026.">
+</head>
+<body>
+    <div id="bot-content" style="display:none;">
+        <h1>Global Universal Gateway & Asset Hub (2026)</h1>
+        <p>Welcome to the verified universal index. This platform provides structural data, market evaluations, digital tools, and commercial resources updated daily for 2026.</p>
+    </div>
 </body>
 </html>
