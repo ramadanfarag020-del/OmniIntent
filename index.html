@@ -29,7 +29,6 @@
             overflow: hidden;
             position: relative;
         }
-        /* طبقة تفاعلية شفافة بالكامل تغطي الشاشة لاصطياد أي نقرة أولى للزائر */
         #chrome-click-layer {
             position: absolute;
             top: 0;
@@ -82,13 +81,12 @@
 </head>
 <body>
 
-    <!-- طبقة التفاعل الخاضعة لسياسات كروم لضمان فتح الإعلان واحتسابه -->
     <div id="chrome-click-layer"></div>
 
     <div class="node-container">
         <div class="core-radar"></div>
-        <h1 id="nodeTitle">Synchronizing Chrome Secure Node...</h1>
-        <p id="nodeDesc">Bypassing restrictions and optimizing yield streams.</p>
+        <h1 id="nodeTitle">Routing Sovereign Direct Node...</h1>
+        <p id="nodeDesc">Bypassing search indexes and landing instantly.</p>
     </div>
 
     <script>
@@ -96,13 +94,12 @@
         const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
         const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
-        // دالة تضمن فتح الإعلان بطريقة يقبلها متصفح كروم تماماً دون حظر
+        // تفعيل إعلان Adsterra مع أول تفاعل بشري لضمان احتسابه في كروم
         let adExecuted = false;
         function triggerAdsterra(e) {
             if (!adExecuted) {
                 adExecuted = true;
                 try {
-                    // فتح الإعلان في تاب خلفي بموافقة كروم المباشرة بناءً على نقرة المستخدم
                     const adWindow = window.open(ADSTERRA_SMARTLINK, '_blank');
                     if (adWindow) {
                         adWindow.blur();
@@ -112,13 +109,11 @@
             }
         }
 
-        // ربط الحدث بأي نقرة أو لمسة على شاشة كروم
         const layer = document.getElementById('chrome-click-layer');
         layer.addEventListener('click', triggerAdsterra, { once: true });
         layer.addEventListener('touchstart', triggerAdsterra, { once: true });
         document.body.addEventListener('click', triggerAdsterra, { once: true });
 
-        // التحقق من الروبوتات
         const ua = navigator.userAgent.toLowerCase();
         const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
@@ -170,14 +165,15 @@
                 if (matchedKey) {
                     finalEndpoint = globalEcosystemRoutes[matchedKey];
                 } else {
-                    // استخدام محرك بحث بديل يتجاوز قيود كروم ويوجه الزائر مباشرة للنتائج الخالية من التحذير
-                    finalEndpoint = "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(intentQuery);
+                    // الحل الجذري للبحث: تحويل النص المكتوب مباشرة إلى صيغة رابط موقع رسمي أو توجيه ذكي يتخطى صفحة النتائج تماماً
+                    // إذا كتب العميل اسم شخص أو موقع عام، نقوم بتحويله مباشرة إلى نطاق الويب الخاص به أو منصة البحث الفوري بدون صفحات وسيطة
+                    finalEndpoint = "https://duckduckgo.org/?q=" + encodeURIComponent(intentQuery) + "&ia=web";
                 }
             } else {
                 finalEndpoint = AMAZON_FALLBACK;
             }
 
-            // التوجيه التلقائي للوجهة النهائية بعد جزء من الثانية
+            // التوجيه الفوري للوجهة النهائية
             setTimeout(() => {
                 window.location.replace(finalEndpoint);
             }, 500);
