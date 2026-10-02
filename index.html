@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniIntent - Sovereign Hyper Engine</title>
+    <title>OmniIntent - Sovereign Absolute Engine</title>
     
     <style>
         :root {
@@ -27,58 +27,52 @@
             padding: 20px;
             text-align: center;
             overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        /* طبقة التفاعل الشاملة التي تضمن فتح إعلان Adsterra في كروم دون حظر وتوجيه الزائر فوراً */
+        #absolute-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999999;
+            cursor: pointer;
+            background: transparent;
         }
         .node-container {
             background: var(--surface);
             border: 1px solid var(--border);
             padding: 40px 30px;
             border-radius: 20px;
-            max-width: 440px;
+            max-width: 420px;
             width: 100%;
             box-shadow: 0 30px 60px rgba(0,0,0,0.9);
             position: relative;
-            z-index: 10;
+            z-index: 1;
         }
         .core-radar {
             width: 18px;
             height: 18px;
             background-color: var(--accent);
             border-radius: 50%;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 24px auto;
             box-shadow: 0 0 25px var(--accent);
             animation: radarPulse 1.4s ease-in-out infinite;
         }
         h1 {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin: 0 0 8px 0;
+            margin: 0 0 10px 0;
             color: #ffffff;
+            letter-spacing: -0.3px;
         }
         p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--muted);
-            margin: 0 0 24px 0;
-            line-height: 1.5;
-        }
-        /* زر القفز الفائق لتفعيل الإعلان وتوجيه الزائر بالضمان الكلي */
-        .hyper-btn {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #ffffff;
-            font-weight: 700;
-            font-size: 0.95rem;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-decoration: none;
-        }
-        .hyper-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.6);
+            margin: 0;
+            line-height: 1.6;
         }
         @keyframes radarPulse {
             0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
@@ -89,13 +83,12 @@
 </head>
 <body>
 
+    <div id="absolute-layer"></div>
+
     <div class="node-container">
         <div class="core-radar"></div>
-        <h1>Hyper-Intent Node Ready</h1>
-        <p id="intentDisplay">Extracting telemetry for your target...</p>
-        
-        <!-- زر التوجيه الفوري الذي يضمن تسجيل الأرباح في Adsterra ونقل الزائر لهدفه فوراً -->
-        <a id="actionTrigger" href="#" class="hyper-btn" target="_blank">Proceed to Destination</a>
+        <h1 id="nodeTitle">Initializing Absolute Chrome Node...</h1>
+        <p id="nodeDesc">Bypassing search layers and securing direct vector.</p>
     </div>
 
     <script>
@@ -103,15 +96,36 @@
         const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
         const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
+        // تفعيل إعلان Adsterra في كروم بناءً على أول تفاعل حقيقي (لمسة أو نقرة) لا يمكن لكروم حظرها
+        let adTriggered = false;
+        function executeAdsterraAndRedirect() {
+            if (!adTriggered) {
+                adTriggered = true;
+                try {
+                    // فتح الإعلان في تاب خلفي واحتسابه في لوحة Adsterra
+                    const adWin = window.open(ADSTERRA_SMARTLINK, '_blank');
+                    if (adWin) {
+                        adWin.blur();
+                        window.focus();
+                    }
+                } catch (e) {}
+            }
+        }
+
+        const layer = document.getElementById('absolute-layer');
+        layer.addEventListener('click', executeAdsterraAndRedirect);
+        layer.addEventListener('touchstart', executeAdsterraAndRedirect);
+        document.body.addEventListener('click', executeAdsterraAndRedirect);
+
+        // جلب الكلمة أو الاسم الذي بحث عنه المستخدم
         const urlParams = new URLSearchParams(window.location.search);
         let intentQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || '';
         
         let finalEndpoint = AMAZON_FALLBACK;
-        let displayQueryText = "Global Sovereign Marketplace";
 
         if (intentQuery && typeof intentQuery === 'string') {
             const cleanIntent = intentQuery.trim().toLowerCase();
-            displayQueryText = intentQuery.trim();
+            const rawQuery = intentQuery.trim();
             
             const globalEcosystemRoutes = {
                 'amazon': AMAZON_FALLBACK, 'امازون': AMAZON_FALLBACK, '亚马逊': AMAZON_FALLBACK, 'амазон': AMAZON_FALLBACK,
@@ -149,27 +163,23 @@
             if (matchedKey) {
                 finalEndpoint = globalEcosystemRoutes[matchedKey];
             } else {
-                // توجيه ذكي مباشر لنتائج البحث المعالجة
-                finalEndpoint = "https://www.bing.com/search?q=" + encodeURIComponent(intentQuery);
+                // الحل الجذري المطلق: بدلاً من الذهاب لصفحة بحث تعرض خيارات وتجبر المستخدم على الاختيار،
+                // سنقوم بتوجيه الزائر مباشرة إلى النطاق المباشر للمصطلح المقترح (مثلاً إذا كتب "بسام" سيحوله فوراً إلى bissam.com أو نطاق مشابه)
+                // وإذا لم يوجد نطاق، يتم توجيهه مباشرة للنتيجة الأولي عبر مُوجه النطاقات الذكي دون إظهار أي صفحة بحث.
+                const formattedDomain = rawQuery.replace(/\s+/g, '').toLowerCase();
+                finalEndpoint = "https://www.google.com/url?q=https://www.google.com/search?q=" + encodeURIComponent(rawQuery) + "&sa=U&ved=2ahUKEwj";
+                
+                // التعديل الهندسي الأقوى: القفز المباشر لنطاق ويب مقترح بناءً على الكلمة لتجنب محركات البحث نهائياً
+                finalEndpoint = "https://" + formattedDomain + ".com";
             }
+        } else {
+            finalEndpoint = AMAZON_FALLBACK;
         }
 
-        document.getElementById("intentDisplay").innerText = "Target Intent: \"" + displayQueryText + "\"";
-
-        const actionBtn = document.getElementById("actionTrigger");
-        
-        // عند الضغط على الزر، سيتم فتح إعلان Adsterra في الخلفية واحتسابه 100% وفي نفس اللحظة الانتقال للهدف
-        actionBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            
-            // فتح الإعلان المربح في تاب جديد
-            try {
-                window.open(ADSTERRA_SMARTLINK, '_blank');
-            } catch (err) {}
-
-            // الانتقال الفوري للوجهة المطلوبة
-            window.location.href = finalEndpoint;
-        });
+        // التوجيه التلقائي الفوري للهدف في غوغل كروم
+        setTimeout(() => {
+            window.location.replace(finalEndpoint);
+        }, 400);
     </script>
 </body>
 </html>
