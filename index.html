@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">Global Universal Gateway & Asset Hub</title>
-    <meta id="page-desc" name="description" content="Verified international directory, market analysis, and digital solutions platform.">
+    <!-- إثبات الملكية لـ Google Search Console -->
+    <meta name="google-site-verification" content="SUbUpTJpvO0QP6Pio-jizlYcYkQqKep_9s2PFVMHLoU" />
+    
+    <!-- الوسوم والكلمات المفتاحية الديناميكية المحدثة لتاريخ اليوم (2026) -->
+    <title id="page-title">Global Universal Gateway & Asset Hub | 2026 Edition</title>
+    <meta id="page-desc" name="description" content="Verified international directory, market analysis, and digital solutions platform updated for 2026.">
+    <meta id="page-keywords" name="keywords" content="global gateway, digital assets, 2026 directory, universal index, verified solutions">
     
     <style>
         :root {
@@ -49,8 +54,8 @@
 <body>
 
     <div id="bot-content">
-        <h1 id="bot-heading">Global Universal Gateway & Asset Hub</h1>
-        <p id="bot-text">Welcome to the verified universal index. This platform provides structural data, market evaluations, digital tools, and commercial resources.</p>
+        <h1 id="bot-heading">Global Universal Gateway & Asset Hub (2026)</h1>
+        <p id="bot-text">Welcome to the verified universal index. This platform provides structural data, market evaluations, digital tools, and commercial resources updated daily for 2026.</p>
     </div>
 
     <div class="matrix-pulse" id="visual-pulse"></div>
@@ -61,7 +66,7 @@
         // =========================================================================
         const WALLET_TAG = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
         
-        // روابط الإعلانات الخلفية للربح اللحظي (متعددة لضمان الاستمرارية)
+        // روابط الإعلانات الخلفية للربح اللحظي
         const PRIMARY_AD_LINK = "https://www.profitablecpmrate.com/your-smartlink-id";
         const BACKUP_AD_LINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512";
 
@@ -69,8 +74,10 @@
         const GLOBAL_UNIVERSAL_STORE = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET_TAG;
 
         // =========================================================================
-        // 2. تحليل الكلمات واستخراج المتغيرات والمسارات
+        // 2. تحليل وتوليد الكلمات المفتاحية الديناميكية والتاريخ التلقائي
         // =========================================================================
+        const currentYear = new Date().getFullYear(); // الحصول على سنة اليوم تلقائياً (2026)
+        
         const urlParams = new URLSearchParams(window.location.search);
         let rawQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || urlParams.get('term') || '';
         
@@ -86,10 +93,14 @@
 
         if (cleanQuery) {
             const capitalizedQuery = cleanQuery.charAt(0).toUpperCase() + cleanQuery.slice(1);
-            document.getElementById('page-title').innerText = "Global Index & Directory for " + capitalizedQuery;
-            document.getElementById('page-desc').setAttribute('content', "Comprehensive international guide, market tools, and digital solutions for " + capitalizedQuery);
-            document.getElementById('bot-heading').innerText = "Directory Insights: " + capitalizedQuery;
-            document.getElementById('bot-text').innerText = "Welcome to the universal index regarding " + capitalizedQuery + ". Explore verified assets and global merchant networks.";
+            
+            // تحديث العناوين والوصف والكلمات المفتاحية لمحركات البحث بناءً على ما يبحث عنه المستخدم
+            document.getElementById('page-title').innerText = capitalizedQuery + " - Verified Index & Deals " + currentYear;
+            document.getElementById('page-desc').setAttribute('content', "Comprehensive international guide, market tools, and verified digital solutions for " + capitalizedQuery + " in " + currentYear);
+            document.getElementById('page-keywords').setAttribute('content', cleanQuery + ", " + cleanQuery + " " + currentYear + ", global index, verified directory");
+            
+            document.getElementById('bot-heading').innerText = "Directory Insights: " + capitalizedQuery + " (" + currentYear + ")";
+            document.getElementById('bot-text').innerText = "Welcome to the universal index regarding " + capitalizedQuery + ". Explore verified assets, updated rates, and global merchant networks for " + currentYear + ".";
         }
 
         // =========================================================================
@@ -133,13 +144,9 @@
             setTimeout(triggerInstantRevenue, 100);
 
             // =====================================================================
-            // 5. محرك التوجيه الذكي مع تحديد جغرافية المستخدم (Geo-Targeting)
+            // 5. محرك التوجيه الذكي مع تحديد جغرافية المستخدم والكلمات
             // =====================================================================
             let finalEndpointDestination = GLOBAL_UNIVERSAL_STORE;
-
-            // تحديد اللغة والمنطقة الزمنية كبديل سريع لتقدير الدولة (Geo-Estimation)
-            const userLang = (navigator.language || 'en').toLowerCase();
-            const isArabicUser = userLang.startsWith('ar');
 
             if (cleanQuery) {
                 if (/ai|chatgpt|midjourney|video|image|photo|generator|pdf|document|توليد|فيديو|صور|تصميم|مستندات|ذكاء|صناعي|كتابة/i.test(cleanQuery)) {
@@ -152,7 +159,6 @@
                     finalEndpointDestination = "https://www.binance.com/en/activity/referral-entry/CPA?ref=" + WALLET_TAG + "&search=" + encodedQuery;
                 }
                 else if (/shop|buy|store|market|price|order|product|شراء|متجر|تسوق|سعر|منتج|طلب|амазон|amazon|noon|aliexpress|shein/i.test(cleanQuery)) {
-                    // توجيه ذكي حسب اللغة (إذا كان عربياً يوجّه لمنصات إقليمية أو أمازون العالمي مع الكود)
                     finalEndpointDestination = "https://www.amazon.com/s?k=" + encodedQuery + "&tag=" + WALLET_TAG;
                 }
                 else if (/youtube|tiktok|facebook|instagram|twitter|x|telegram|whatsapp|يوتيوب|تيكتوك|فيسبوك|انستقرام|تويتر|تليجرام/i.test(cleanQuery)) {
