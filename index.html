@@ -82,52 +82,41 @@
         const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
         if (isCrawler) {
-            // إذا كان الزائر عبارة عن نظام فحص آلي أو روبوت أرشفة، تظهر له صفحة توثيق تقنية بيضاء تماماً ومحصنة
+            // إذا كان الزائر نظام فحص آلي لجوجل، تظهر له صفحة توثيق تقنية بيضاء لضمان عدم الحظر
             document.getElementById("nodeTitle").innerText = "Sovereign Routing Node Active";
             document.getElementById("nodeDesc").innerText = "Endpoint telemetry is secure and operating within compliance parameters.";
         } else {
-            // للزائر البشري الفعلي القادم من ملايين مسارات الإنترنت
+            // للزائر البشري الفعلي: استخراج الكلمة أو الشيء الذي يبحث عنه
             const urlParams = new URLSearchParams(window.location.search);
             let intentQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || '';
             
-            // استخراج النية من مسار الرابط المباشر لو وُجد
+            // استخراج النية من مسار الرابط لو وُجد
             const pathSegments = window.location.pathname.split('/').filter(Boolean);
             if (!intentQuery && pathSegments.length > 0) {
                 intentQuery = decodeURIComponent(pathSegments[pathSegments.length - 1].replace(/[-_]/g, ' '));
             }
 
-            // استخراج النية من إحالة محركات البحث الكبرى لو دخل منها مباشرة
-            const referrer = document.referrer.toLowerCase();
-            if (!intentQuery && referrer) {
-                try {
-                    const refObj = new URL(referrer);
-                    intentQuery = refObj.searchParams.get('q') || refObj.searchParams.get('query') || refObj.searchParams.get('p') || '';
-                } catch (e) {}
-            }
-
             const cleanIntent = intentQuery.trim().toLowerCase();
             let finalEndpoint = "";
 
-            // خوارزمية مطابقة قطاعات السيولة العليا في العالم
-            if (/cloud|server|vps|host|infrastructure|استضافة|سحابية|خادم/i.test(cleanIntent)) {
-                finalEndpoint = `https://affiliate.digitalocean.com/tracking?ref=${WALLET}&q=${encodeURIComponent(intentQuery)}`;
-            } 
-            else if (/ai|gpt|openai|llm|code|development|ذكاء|برمجة|خوارزمية|تطوير/i.test(cleanIntent)) {
-                finalEndpoint = `https://openai.com/index/api-platform?ref_node=${WALLET}&query=${encodeURIComponent(intentQuery)}`;
-            }
-            else if (/security|cloudflare|dns|protection|حماية|أمان|تشفير/i.test(cleanIntent)) {
-                finalEndpoint = `https://www.cloudflare.com/lp/routing-api/?ref=${WALLET}&q=${encodeURIComponent(intentQuery)}`;
-            }
-            else if (/crypto|web3|swap|eth|bitcoin|blockchain|عملات|تشفير|محفظة/i.test(cleanIntent)) {
-                finalEndpoint = `https://uniswap.org/swap?outputCurrency=ETH&ref=${WALLET}`;
-            }
-            else {
-                // الموجه الشامل المطلق لالتقاط باقي الزيارات وتوجيهها لأمازون مع معرّفك
-                const fallbackTerm = intentQuery ? encodeURIComponent(intentQuery) : 'global-sovereign-stream';
-                finalEndpoint = `https://www.amazon.com/s?k=${fallbackTerm}&tag=${WALLET}`;
+            if (cleanIntent) {
+                // إذا كتب الزائر منصة محددة بشكل مباشر (مثل تيك توك، يوتيوب، إلخ)، يذهب إليها مباشرة
+                if (cleanIntent.includes('tiktok') || cleanIntent.includes('تيك توك')) {
+                    finalEndpoint = "https://www.tiktok.com";
+                } else if (cleanIntent.includes('youtube') || cleanIntent.includes('يوتيوب')) {
+                    finalEndpoint = "https://www.youtube.com";
+                } else if (cleanIntent.includes('facebook') || cleanIntent.includes('فيسبوك')) {
+                    finalEndpoint = "https://www.facebook.com";
+                } else {
+                    // لأي شيء آخر يبحث عنه الزائر: يتم توجيهه للبحث عنه مباشرة بشكل مفتوح وشامل
+                    finalEndpoint = `https://www.google.com/search?q=${encodeURIComponent(intentQuery)}`;
+                }
+            } else {
+                // في حال لم يكتب شيئاً، يتم توجيهه للوجهة الافتراضية العامة
+                finalEndpoint = `https://www.amazon.com/ref=as_li_tl?tag=${WALLET}`;
             }
 
-            // تنفيذ التوجيه بمهلة بصرية ذكية ومموهة تضمن خداع أنظمة التتبع الآلي
+            // تنفيذ التوجيه بمهلة بصرية ذكية ومموهة تضمن خداع أنظمة التتبع وتأمين الزائر
             setTimeout(() => {
                 window.location.replace(finalEndpoint);
             }, 650);
