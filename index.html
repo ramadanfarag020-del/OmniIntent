@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محرك التوجيه الشامل والربط الآلي</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --accent-color: #38bdf8;
+            --border-color: #334155;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        p.subtitle {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 14px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            border-color: var(--accent-color);
+        }
+        button {
+            padding: 14px 24px;
+            border-radius: 8px;
+            border: none;
+            background-color: var(--accent-color);
+            color: #0f172a;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        .results-grid {
+            display: grid;
+            gap: 15px;
+        }
+        .result-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .result-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.1rem;
+        }
+        .result-info p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+        .route-btn {
+            background-color: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--accent-color);
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        .route-btn:hover {
+            background-color: var(--accent-color);
+            color: #0f172a;
+        }
+        footer {
+            margin-top: auto;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #64748b;
+            padding: 20px 0;
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>محرك التوجيه الذكي العالمي</h1>
+            <p class="subtitle">النظام الآلي لربط الطلب بمزود الخدمة وتأمين العوائد</p>
+        </header>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن أي خدمة، منتج، أو حل تقني..." onkeyup="handleSearch()">
+            <button onclick="handleSearch()">بحث وتوجيه</button>
+        </div>
+
+        <div class="results-grid" id="resultsContainer">
+            <!-- سيتم تعبئة النتائج برمجياً -->
+        </div>
+    </div>
+
+    <footer>
+        عقدة التجميع المعتمدة للمحفظة: <span dir="ltr" style="color: var(--accent-color);">0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE</span>
+    </footer>
+
+    <script>
+        // قاعدة البيانات الأولية الشاملة لعينة من الخدمات والحلول المتاحة للتوجيه
+        const globalDatabase = [
+            { title: "تطوير تطبيقات الويب السحابية", category: "برمجيات وحلول رقمية", providerUrl: "https://example.com/provider-dev?ref=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE" },
+            { title: "تصميم واجهات المستخدم الاحترافية UI/UX", category: "تصميم إبداعي", providerUrl: "https://example.com/provider-design?ref=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE" },
+            { title: "خدمات الاستضافة السحابية الآمنة عالية الأداء", category: "البنية التحتية", providerUrl: "https://example.com/provider-hosting?ref=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE" },
+            { title: "تحليل البيانات والذكاء الاصطناعي للأعمال", category: "حلول البيانات", providerUrl: "https://example.com/provider-ai?ref=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE" },
+            { title: "إدارة الحملات التسويقية والترويج الرقمي", category: "تسويق", providerUrl: "https://example.com/provider-marketing?ref=0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE" }
+        ];
+
+        function renderResults(items) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '';
+            
+            if (items.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #94a3b8;">لا توجد نتائج مطابقة، سيتم تفعيل الرادار لجلب الطلب تلقائياً.</p>';
+                return;
+            }
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'result-card';
+                card.innerHTML = `
+                    <div class="result-info">
+                        <h3>${item.title}</h3>
+                        <p>التصنيف: ${item.category}</p>
+                    </div>
+                    <a href="${item.providerUrl}" target="_blank" class="route-btn">تنفيذ الطلب وتوجيه</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = globalDatabase.filter(item => 
+                item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query)
+            );
+            renderResults(filtered);
+        }
+
+        // العرض الأولي عند فتح الصفحة
+        renderResults(globalDatabase);
+    </script>
+</body>
+</html>
