@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OmniIntent - Sovereign Absolute Engine</title>
+    <title>Direct Sovereign Router</title>
     
     <style>
         :root {
@@ -30,8 +30,7 @@
             position: relative;
             cursor: pointer;
         }
-        /* طبقة التفاعل الشاملة التي تضمن فتح إعلان Adsterra في كروم دون حظر وتوجيه الزائر فوراً */
-        #absolute-layer {
+        #direct-click-layer {
             position: absolute;
             top: 0;
             left: 0;
@@ -66,7 +65,6 @@
             font-weight: 700;
             margin: 0 0 10px 0;
             color: #ffffff;
-            letter-spacing: -0.3px;
         }
         p {
             font-size: 0.85rem;
@@ -83,26 +81,25 @@
 </head>
 <body>
 
-    <div id="absolute-layer"></div>
+    <!-- طبقة التفاعل لضمان عمل إعلان Adsterra في كروم بدون حظر -->
+    <div id="direct-click-layer"></div>
 
     <div class="node-container">
         <div class="core-radar"></div>
-        <h1 id="nodeTitle">Initializing Absolute Chrome Node...</h1>
-        <p id="nodeDesc">Bypassing search layers and securing direct vector.</p>
+        <h1 id="nodeTitle">Direct Routing in Progress...</h1>
+        <p id="nodeDesc">Jumping straight to the target vector.</p>
     </div>
 
     <script>
         const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
-        const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
+        const DEFAULT_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
         const ADSTERRA_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
-        // تفعيل إعلان Adsterra في كروم بناءً على أول تفاعل حقيقي (لمسة أو نقرة) لا يمكن لكروم حظرها
         let adTriggered = false;
-        function executeAdsterraAndRedirect() {
+        function executeAdsterra() {
             if (!adTriggered) {
                 adTriggered = true;
                 try {
-                    // فتح الإعلان في تاب خلفي واحتسابه في لوحة Adsterra
                     const adWin = window.open(ADSTERRA_SMARTLINK, '_blank');
                     if (adWin) {
                         adWin.blur();
@@ -112,71 +109,48 @@
             }
         }
 
-        const layer = document.getElementById('absolute-layer');
-        layer.addEventListener('click', executeAdsterraAndRedirect);
-        layer.addEventListener('touchstart', executeAdsterraAndRedirect);
-        document.body.addEventListener('click', executeAdsterraAndRedirect);
+        const layer = document.getElementById('direct-click-layer');
+        layer.addEventListener('click', executeAdsterra);
+        layer.addEventListener('touchstart', executeAdsterra);
+        document.body.addEventListener('click', executeAdsterra);
 
-        // جلب الكلمة أو الاسم الذي بحث عنه المستخدم
+        // استقبال الكلمة التي كتبها المستخدم
         const urlParams = new URLSearchParams(window.location.search);
         let intentQuery = urlParams.get('q') || urlParams.get('query') || urlParams.get('search') || urlParams.get('keyword') || urlParams.get('s') || '';
         
-        let finalEndpoint = AMAZON_FALLBACK;
+        let finalEndpoint = DEFAULT_FALLBACK;
 
         if (intentQuery && typeof intentQuery === 'string') {
             const cleanIntent = intentQuery.trim().toLowerCase();
-            const rawQuery = intentQuery.trim();
             
-            const globalEcosystemRoutes = {
-                'amazon': AMAZON_FALLBACK, 'امازون': AMAZON_FALLBACK, '亚马逊': AMAZON_FALLBACK, 'амазон': AMAZON_FALLBACK,
-                'aliexpress': 'https://www.aliexpress.com', '全球速卖通': 'https://www.aliexpress.com',
-                'ebay': 'https://www.ebay.com',
-                'noon': 'https://www.noon.com', 'نون': 'https://www.noon.com',
-                'shein': 'https://www.shein.com',
-                'walmart': 'https://www.walmart.com',
-                'alibaba': 'https://www.alibaba.com', '阿里巴巴': 'https://www.alibaba.com',
-                'taobao': 'https://www.taobao.com', '淘宝': 'https://www.taobao.com',
-                'jd': 'https://www.jd.com', '京东': 'https://www.jd.com',
-                'rakuten': 'https://www.rakuten.co.jp', '楽天': 'https://www.rakuten.co.jp',
-                'jarir': 'https://www.jarir.com', 'جرير': 'https://www.jarir.com',
-                'extra': 'https://www.extra.com', 'اكسترا': 'https://www.extra.com',
-                'mercedes': 'https://www.mercedes-benz.com', 'مرسيدس': 'https://www.mercedes-benz.com',
-                'bmw': 'https://www.bmw.com',
-                'audi': 'https://www.audi.com',
-                'tesla': 'https://www.tesla.com', '特斯拉': 'https://www.tesla.com',
-                'toyota': 'https://www.toyota.com',
-                'tiktok': 'https://www.tiktok.com', 'تيك توك': 'https://www.tiktok.com', '抖音': 'https://www.tiktok.com',
-                'youtube': 'https://www.youtube.com', 'يوتيوب': 'https://www.youtube.com',
-                'facebook': 'https://www.facebook.com', 'فيسبوك': 'https://www.facebook.com',
-                'instagram': 'https://www.instagram.com', 'انستقرام': 'https://www.instagram.com',
-                'twitter': 'https://twitter.com', 'x': 'https://twitter.com', 'تويتر': 'https://twitter.com',
-                'telegram': 'https://telegram.org', 'телеграм': 'https://telegram.org',
-                'github': 'https://github.com', 'غيت هاب': 'https://github.com',
-                'vercel': 'https://vercel.com',
-                'chatgpt': 'https://chatgpt.com', 'openai': 'https://openai.com',
-                'google': 'https://www.google.com', 'جوجل': 'https://www.google.com',
-                'netflix': 'https://www.netflix.com', 'نتفلكس': 'https://www.netflix.com'
+            // جدول التوجيه المباشر (أضف هنا أي كلمة والرابط الذي تريد أن يدخل إليه المستخدم فوراً دون بحث)
+            const directRoutes = {
+                'يوتيوب': 'https://www.youtube.com',
+                'youtube': 'https://www.youtube.com',
+                'بسام': 'https://www.instagram.com/bassam.78', // مثال لرابط مباشر لاسم بسام الذي ظهر في صورتك
+                'انستقرام': 'https://www.instagram.com',
+                'instagram': 'https://www.instagram.com',
+                'تيك توك': 'https://www.tiktok.com',
+                'tiktok': 'https://www.tiktok.com',
+                'امازون': DEFAULT_FALLBACK,
+                'amazon': DEFAULT_FALLBACK,
+                'جوجل': 'https://www.google.com',
+                'google': 'https://www.google.com'
             };
 
-            let matchedKey = Object.keys(globalEcosystemRoutes).find(key => cleanIntent.includes(key));
+            // البحث عن مطابقة دقيقة أو جزئية داخل الجدول المباشر
+            let matchedKey = Object.keys(directRoutes).find(key => cleanIntent.includes(key));
             
             if (matchedKey) {
-                finalEndpoint = globalEcosystemRoutes[matchedKey];
+                finalEndpoint = directRoutes[matchedKey];
             } else {
-                // الحل الجذري المطلق: بدلاً من الذهاب لصفحة بحث تعرض خيارات وتجبر المستخدم على الاختيار،
-                // سنقوم بتوجيه الزائر مباشرة إلى النطاق المباشر للمصطلح المقترح (مثلاً إذا كتب "بسام" سيحوله فوراً إلى bissam.com أو نطاق مشابه)
-                // وإذا لم يوجد نطاق، يتم توجيهه مباشرة للنتيجة الأولي عبر مُوجه النطاقات الذكي دون إظهار أي صفحة بحث.
-                const formattedDomain = rawQuery.replace(/\s+/g, '').toLowerCase();
-                finalEndpoint = "https://www.google.com/url?q=https://www.google.com/search?q=" + encodeURIComponent(rawQuery) + "&sa=U&ved=2ahUKEwj";
-                
-                // التعديل الهندسي الأقوى: القفز المباشر لنطاق ويب مقترح بناءً على الكلمة لتجنب محركات البحث نهائياً
-                finalEndpoint = "https://" + formattedDomain + ".com";
+                // إذا لم تكن الكلمة موجودة في الجدول، بدلاً من إرساله لصفحة بحث (مثل DuckDuckGo)، 
+                // سنقوم بتوجيهه مباشرة للموقع الافتراضي أو رابط محدد مسبقاً لمنع فتح صفحة البحث نهائياً.
+                finalEndpoint = DEFAULT_FALLBACK;
             }
-        } else {
-            finalEndpoint = AMAZON_FALLBACK;
         }
 
-        // التوجيه التلقائي الفوري للهدف في غوغل كروم
+        // الانتقال الفوري والمباشر داخل متصفح كروم دون أي صفحات بحث أو خيارات
         setTimeout(() => {
             window.location.replace(finalEndpoint);
         }, 400);
