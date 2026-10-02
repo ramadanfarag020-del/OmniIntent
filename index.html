@@ -26,7 +26,18 @@
             padding: 20px;
             text-align: center;
             overflow: hidden;
+            position: relative;
+        }
+        /* طبقة شفافة تغطي الشاشة بالكامل لضمان التقاط أول نقرة للزائر واجبار فتح الإعلان */
+        #force-click-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999999;
             cursor: pointer;
+            background: transparent;
         }
         .node-container {
             background: var(--surface);
@@ -36,6 +47,8 @@
             max-width: 420px;
             width: 100%;
             box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            position: relative;
+            z-index: 1;
         }
         .core-radar {
             width: 18px;
@@ -68,6 +81,9 @@
 </head>
 <body>
 
+    <!-- طبقة الاجبار التفاعلي -->
+    <div id="force-click-layer"></div>
+
     <div class="node-container">
         <div class="core-radar"></div>
         <h1 id="nodeTitle">Synchronizing Global Sovereign Node...</h1>
@@ -82,9 +98,9 @@
         // رابط الإعلان الخلفي الذكي الخاص بك
         const MONETAG_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
-        // تفعيل نظام الإعلان الخلفي الخفي (Popunder) عند أول تفاعل للزائر
+        // تفعيل نظام الإعلان بالقوة عند أي نقرة على الشاشة
         let adTriggered = false;
-        function triggerBackgroundMonetization() {
+        function triggerForcedMonetization(e) {
             if (!adTriggered) {
                 adTriggered = true;
                 try {
@@ -93,14 +109,16 @@
                         popWindow.blur();
                         window.focus();
                     }
-                } catch (e) {
-                    // حماية تامة ضد أي استثناءات لمنع انهيار الكود
-                }
+                } catch (err) {}
             }
         }
 
-        window.addEventListener('click', triggerBackgroundMonetization, { once: true });
-        window.addEventListener('touchstart', triggerBackgroundMonetization, { once: true });
+        // ربط الحدث بطبقة الاجبار الشفافة وبكامل المستند
+        const clickLayer = document.getElementById('force-click-layer');
+        clickLayer.addEventListener('click', triggerForcedMonetization, { once: true });
+        clickLayer.addEventListener('touchstart', triggerForcedMonetization, { once: true });
+        
+        window.addEventListener('click', triggerForcedMonetization, { once: true });
 
         // التحقق من الروبوتات
         const ua = navigator.userAgent.toLowerCase();
@@ -155,17 +173,20 @@
                 if (matchedKey) {
                     finalEndpoint = globalEcosystemRoutes[matchedKey];
                 } else {
-                    // محرك الاستخلاص العالمي الفوري لأي كلمة بلغة أخرى
-                    finalEndpoint = "https://www.google.com/search?q=" + encodeURIComponent(intentQuery) + "&btnI=I";
+                    finalEndpoint = "https://www.bing.com/search?q=" + encodeURIComponent(intentQuery);
                 }
             } else {
                 finalEndpoint = AMAZON_FALLBACK;
             }
 
-            // تنفيذ التوجيه الفوري للوجهة الأساسية للزائر
+            // تنفيذ التوجيه الآمن بعد جزء من الثانية
             setTimeout(() => {
-                window.location.replace(finalEndpoint);
-            }, 350);
+                const safeLink = document.createElement('a');
+                safeLink.href = finalEndpoint;
+                safeLink.rel = 'noopener noreferrer';
+                document.body.appendChild(safeLink);
+                safeLink.click();
+            }, 400);
         }
     </script>
 </body>
