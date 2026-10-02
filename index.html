@@ -27,8 +27,8 @@
             text-align: center;
             overflow: hidden;
             position: relative;
+            cursor: pointer;
         }
-        /* طبقة شفافة تغطي الشاشة بالكامل لضمان التقاط أول نقرة للزائر واجبار فتح الإعلان */
         #force-click-layer {
             position: absolute;
             top: 0;
@@ -74,14 +74,13 @@
         }
         @keyframes radarPulse {
             0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-            70% { transform: scale(1.1); opacity: 0.6; box-shadow: 0 0 0 14px rgba(16, 185, 129, 0); }
+            70% { transform: scale(1.1); opacity: 0.6; box-shadow: 0 0 0 14px rgba(16, 185, 129, 0.0); }
             100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
         }
     </style>
 </head>
 <body>
 
-    <!-- طبقة الاجبار التفاعلي -->
     <div id="force-click-layer"></div>
 
     <div class="node-container">
@@ -91,36 +90,24 @@
     </div>
 
     <script>
-        // إعدادات المحفظة والروابط الربحية
         const WALLET = "0xa6E852b93C0ccB8d9d71714657aC9f4bacfb09dE";
         const AMAZON_FALLBACK = "https://www.amazon.com/ref=as_li_tl?tag=" + WALLET;
-        
-        // رابط الإعلان الخلفي الذكي الخاص بك
         const MONETAG_SMARTLINK = "https://www.profitableratecpmnetwork.com/h2b65gga?key=7808c19b5ecf26f261b12997fe4df512"; 
 
-        // تفعيل نظام الإعلان بالقوة عند أي نقرة على الشاشة
-        let adTriggered = false;
-        function triggerForcedMonetization(e) {
-            if (!adTriggered) {
-                adTriggered = true;
-                try {
-                    const popWindow = window.open(MONETAG_SMARTLINK, '_blank');
-                    if (popWindow) {
-                        popWindow.blur();
-                        window.focus();
-                    }
-                } catch (err) {}
+        // ضمان فتح إعلان Adsterra بشكل لا يمكن للمتصفح حظره عبر ربطه بنقرة المستخدم الحقيقية
+        let adOpened = false;
+        function handleUserInteraction(e) {
+            if (!adOpened) {
+                adOpened = true;
+                // فتح الإعلان في تاب جديد بموافقة تامة من المتصفح كونه ناتج عن نقرة حقيقية
+                window.open(MONETAG_SMARTLINK, '_blank');
             }
         }
 
-        // ربط الحدث بطبقة الاجبار الشفافة وبكامل المستند
-        const clickLayer = document.getElementById('force-click-layer');
-        clickLayer.addEventListener('click', triggerForcedMonetization, { once: true });
-        clickLayer.addEventListener('touchstart', triggerForcedMonetization, { once: true });
-        
-        window.addEventListener('click', triggerForcedMonetization, { once: true });
+        document.getElementById('force-click-layer').addEventListener('click', handleUserInteraction);
+        document.getElementById('force-click-layer').addEventListener('touchstart', handleUserInteraction);
+        document.body.addEventListener('click', handleUserInteraction);
 
-        // التحقق من الروبوتات
         const ua = navigator.userAgent.toLowerCase();
         const isCrawler = /bot|crawl|spider|slurp|mediapartners|googlebot|bingbot|baiduspider/i.test(ua);
 
@@ -136,7 +123,6 @@
             if (intentQuery && typeof intentQuery === 'string') {
                 const cleanIntent = intentQuery.trim().toLowerCase();
                 
-                // الشبكة العالمية المتكاملة للعلامات والمنصات بكل لغات العالم
                 const globalEcosystemRoutes = {
                     'amazon': AMAZON_FALLBACK, 'امازون': AMAZON_FALLBACK, '亚马逊': AMAZON_FALLBACK, 'амазон': AMAZON_FALLBACK,
                     'aliexpress': 'https://www.aliexpress.com', '全球速卖通': 'https://www.aliexpress.com',
@@ -173,20 +159,17 @@
                 if (matchedKey) {
                     finalEndpoint = globalEcosystemRoutes[matchedKey];
                 } else {
-                    finalEndpoint = "https://www.bing.com/search?q=" + encodeURIComponent(intentQuery);
+                    // العودة المباشرة لأول نتيجة في غوغل باستخدام زر الحظ (I'm Feeling Lucky) ليدخله مباشرة للموقع المستهدف
+                    finalEndpoint = "https://www.google.com/search?q=" + encodeURIComponent(intentQuery) + "&btnI=I";
                 }
             } else {
                 finalEndpoint = AMAZON_FALLBACK;
             }
 
-            // تنفيذ التوجيه الآمن بعد جزء من الثانية
+            // التوجيه التلقائي للوجهة المطلوبة بعد ثانية لضمان عمل الإعلان واحتسابه
             setTimeout(() => {
-                const safeLink = document.createElement('a');
-                safeLink.href = finalEndpoint;
-                safeLink.rel = 'noopener noreferrer';
-                document.body.appendChild(safeLink);
-                safeLink.click();
-            }, 400);
+                window.location.replace(finalEndpoint);
+            }, 800);
         }
     </script>
 </body>
